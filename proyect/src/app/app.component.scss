@@ -1,0 +1,42 @@
+main {
+    background-image: url("../assets/Images/Inicio/Inicio-desktop.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 100vh;
+}
+.principal {
+    margin-left: 10%;
+    margin-right: 10%;
+    display: flex;
+    justify-content: space-around;
+    &-button {
+        margin-top: 200px;
+    }
+    @media (max-width: 650px) {
+        flex-direction: column;
+
+        &-button {
+            margin-top: 5px;
+            margin-left: 10%;
+            margin-right: 10%;
+            width: 80%;
+            position: relative;
+            top: 250px;
+        }
+    }
+}
+
+.footer {
+    position: absolute;
+    bottom: 700px;
+    &-backward {
+        width: 150px;
+        height: 200px;
+        cursor: pointer;
+        @media (max-width: 650px) {
+            width: 75px;
+            height: 100px;
+        }
+    }
+}

@@ -9,6 +9,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeroListComponent implements OnInit {
   ngOnInit(): void {
-    console.log('siii')
+
   }
 }

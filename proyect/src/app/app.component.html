@@ -1,7 +1,10 @@
-<main>
-</main>
-<router-outlet></router-outlet>
-<div>
-  <p (click)="navigateToCreate()">Crear super heroe</p>
-  <p (click)="navigateToList()">Cueva secreta</p>
+<main id="main">
+  <router-outlet></router-outlet>
+<div class="principal" *ngIf="home">
+  <button class="principal-button" mat-raised-button color="primary" (click)="navigateToNext('/heroesCreate')">Super diseña</button>
+  <button class="principal-button" mat-raised-button color="primary" (click)="navigateToNext('/heroesList')">Guarida secreta</button>
 </div>
+<div class="footer" *ngIf="!home" >
+  <img (click)="navigateToHome()" class="footer-backward" src="../assets/Images/backward.png"/>
+</div>
+</main>
