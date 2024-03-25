@@ -1,0 +1,69 @@
+<div *ngIf="!selectAvatar" class="form-container HeroCreate">
+  <form [formGroup]="heroForm" (ngSubmit)="onSubmit()" class="hero-form">
+    <div
+      class="error"
+      *ngIf="heroForm.get('realName')?.errors?.['pattern'] && heroForm.get('realName')?.touched"
+    >
+      El nombre debe comenzar con una letra mayúscula.
+    </div>
+    <div class="error" *ngIf="heroForm.get('realName')?.errors?.['maxlength']">
+      Máximo 15 caracteres
+    </div>
+    <mat-form-field appearance="fill">
+      <mat-label>Nombre Real</mat-label>
+      <input matInput formControlName="realName" />
+    </mat-form-field>
+    <div class="error" *ngIf="heroForm.get('heroName')?.errors?.['maxlength']">
+      Máximo 15 caracteres
+    </div>
+    <mat-form-field appearance="fill">
+      <mat-label>Apodo de Superhéroe</mat-label>
+      <input matInput formControlName="heroName" />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Poder</mat-label>
+      <mat-select formControlName="power">
+        <mat-option *ngFor="let power of powers" [value]="power">{{
+          power
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div class="error" *ngIf="heroForm.get('weakness')?.errors?.['maxlength']">
+      Máximo 15 caracteres
+    </div>
+    <mat-form-field appearance="fill">
+      <mat-label>Debilidad</mat-label>
+      <input matInput formControlName="weakness" />
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit">Continuar</button>
+  </form>
+</div>
+
+<div *ngIf="selectAvatar" class="avatar-carousel HeroCreate">
+  <div class="image-container">
+    <img [src]="service.imagesOfAvatar[currentImageIndex]" alt="Avatar" />
+  </div>
+  <button
+    (click)="continueToList(currentImageIndex, service.imagesOfAvatar[currentImageIndex])"
+    mat-raised-button
+    color="primary"
+  >
+    Selecciona avatar
+  </button>
+  <div>
+    <button
+      mat-icon-button
+      (click)="showPreviousHeroe()"
+      [disabled]="currentImageIndex === 0"
+    >
+      <mat-icon class="white">chevron_left</mat-icon>
+    </button>
+    <button
+      mat-icon-button
+      (click)="showNextHeroe()"
+      [disabled]="currentImageIndex === service.imagesOfAvatar.length - 1"
+    >
+      <mat-icon class="white">chevron_right</mat-icon>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,49 @@
+<div class="content-center">
+  <form [formGroup]="filter">
+    <mat-form-field appearance="fill">
+      <input matInput formControlName="search" placeholder="Buscar" />
+      <button
+        class="button"
+        mat-button
+        matSuffix
+        aria-label="Search"
+        (click)="applyFilter()"
+      >
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-form-field>
+  </form>
+
+  <div *ngIf="resultsOfSearch">
+    <table class="hero-table">
+      <thead>
+        <tr>
+          <th>Nombre Real</th>
+          <th>Nombre de Héroe</th>
+          <th>Poder</th>
+          <th>Debilidad</th>
+          <th>Avatar</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let hero of filteredHeroes">
+          <td>{{ hero.realName }}</td>
+          <td>{{ hero.heroName }}</td>
+          <td>{{ hero.power }}</td>
+          <td>{{ hero.weakness }}</td>
+          <td><img class="imgAvatar" [src]="hero.avatar" alt="avatar" /></td>
+          <td>
+            <div class="flexColumn">
+              <button (click)="navigateToEditHeroe(hero)" mat-raised-button color="primary">Editar héroe</button>
+              <button (click)="deleteHeroe(hero)" mat-raised-button color="warn">Eliminar héroe</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div *ngIf="!resultsOfSearch && showNoResults">
+    <h1>No hay resultados</h1>
+  </div>
+</div>

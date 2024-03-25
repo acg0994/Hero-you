@@ -1,0 +1,19 @@
+<div mat-dialog-content>
+  <h1>{{ data.info }}</h1>
+  <div class="around" *ngIf="data.buttons">
+    <button
+      (click)="cerrar(true)"
+      mat-raised-button
+      color="primary"
+    >
+      Si
+    </button>
+    <button
+      (click)="cerrar(false)"
+      mat-raised-button
+      color="warn"
+    >
+      No
+    </button>
+  </div>
+</div>
