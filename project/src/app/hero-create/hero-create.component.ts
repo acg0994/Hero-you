@@ -17,6 +17,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { ModalComponent } from '../modal/modal.component';
 import { HeroesCharacteristics } from '../../models/heroesCharacteristics.model';
 import { HttpClientModule } from '@angular/common/http';
+import { LoaderAppService } from '../loader-app.service';
+import { LoaderAppComponent } from '../loader-app/loader-app.component';
 
 @Component({
   selector: 'app-hero-create',
@@ -29,7 +31,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatFormFieldModule,
     MatSelectModule,
     MatIconModule,
-    HttpClientModule 
+    HttpClientModule,
+    LoaderAppComponent 
   ],
   templateUrl: './hero-create.component.html',
   styleUrl: './hero-create.component.scss',
@@ -67,7 +70,8 @@ export class HeroCreateComponent {
     private fb: FormBuilder,
     public service: HeroService,
     private router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public loader: LoaderAppService
   ) {}
 
   showPreviousHeroe() {

@@ -11,6 +11,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { ModalComponent } from '../modal/modal.component';
+import { LoaderAppComponent } from '../loader-app/loader-app.component';
+import { LoaderAppService } from '../loader-app.service';
 
 @Component({
   selector: 'app-hero-list',
@@ -25,6 +27,7 @@ import { ModalComponent } from '../modal/modal.component';
     MatButtonModule,
     MatIconModule,
     SlickCarouselModule,
+    LoaderAppComponent
   ],
   templateUrl: './hero-list.component.html',
   styleUrl: './hero-list.component.scss',
@@ -46,7 +49,8 @@ export class HeroListComponent implements OnInit {
     private filterForm: FormBuilder,
     public service: HeroService,
     private router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public loader: LoaderAppService
   ) {}
 
   ngOnInit(): void {
