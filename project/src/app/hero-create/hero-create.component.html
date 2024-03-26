@@ -10,18 +10,21 @@
       Máximo 15 caracteres
     </div>
     <mat-form-field appearance="fill">
-      <mat-label>Nombre Real</mat-label>
+      <mat-label *ngIf="!editHeroe">Nombre Real</mat-label>
+      <mat-label *ngIf="editHeroe">{{heroSelected.realName}}</mat-label>
       <input matInput formControlName="realName" />
     </mat-form-field>
     <div class="error" *ngIf="heroForm.get('heroName')?.errors?.['maxlength']">
       Máximo 15 caracteres
     </div>
     <mat-form-field appearance="fill">
-      <mat-label>Apodo de Superhéroe</mat-label>
+      <mat-label *ngIf="!editHeroe">Apodo de Superhéroe</mat-label>
+      <mat-label *ngIf="editHeroe">{{heroSelected.heroName}}</mat-label>
       <input matInput formControlName="heroName" />
     </mat-form-field>
     <mat-form-field appearance="fill">
-      <mat-label>Poder</mat-label>
+      <mat-label *ngIf="!editHeroe">Poder</mat-label>
+      <mat-label *ngIf="editHeroe">{{heroSelected.power}}</mat-label>
       <mat-select formControlName="power">
         <mat-option *ngFor="let power of powers" [value]="power">{{
           power
@@ -32,14 +35,16 @@
       Máximo 15 caracteres
     </div>
     <mat-form-field appearance="fill">
-      <mat-label>Debilidad</mat-label>
+      <mat-label *ngIf="!editHeroe">Debilidad</mat-label>
+      <mat-label *ngIf="editHeroe">{{heroSelected.weakness}}</mat-label>
       <input matInput formControlName="weakness" />
     </mat-form-field>
-    <button mat-raised-button color="primary" type="submit">Continuar</button>
+    <button *ngIf="!editHeroe" mat-raised-button color="primary" type="submit">Continuar</button>
+    <button *ngIf="editHeroe" mat-raised-button color="primary" type="submit">Editar</button>
   </form>
 </div>
 
-<div *ngIf="selectAvatar" class="avatar-carousel HeroCreate">
+<div *ngIf="selectAvatar && !editHeroe" class="avatar-carousel HeroCreate">
   <div class="image-container">
     <img [src]="service.imagesOfAvatar[currentImageIndex]" alt="Avatar" />
   </div>

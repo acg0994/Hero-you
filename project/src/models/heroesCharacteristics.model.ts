@@ -4,4 +4,5 @@ export class HeroesCharacteristics {
     realName: string = "";
     weakness: string = "";
     avatar: string = "";
+    index?: number = 0;
 }

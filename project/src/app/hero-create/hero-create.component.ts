@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, Input } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -15,6 +15,7 @@ import { HeroService } from '../hero.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalComponent } from '../modal/modal.component';
+import { HeroesCharacteristics } from '../../models/heroesCharacteristics.model';
 
 @Component({
   selector: 'app-hero-create',
@@ -31,9 +32,19 @@ import { ModalComponent } from '../modal/modal.component';
   templateUrl: './hero-create.component.html',
   styleUrl: './hero-create.component.scss',
 })
-export class HeroCreateComponent {
+export class HeroCreateComponent implements AfterViewInit {
+  @Input() heroSelected: HeroesCharacteristics = new HeroesCharacteristics();
+  @Input() editHeroe: boolean = false;
+
   public heroForm: FormGroup = this.fb.group({
-    realName: ['', [Validators.required, Validators.pattern(/^[A-Z]/), Validators.maxLength(15)]],
+    realName: [
+      '',
+      [
+        Validators.required,
+        Validators.pattern(/^[A-Z]/),
+        Validators.maxLength(15),
+      ],
+    ],
     heroName: ['', [Validators.required, Validators.maxLength(15)]],
     power: ['', [Validators.required]],
     weakness: ['', [Validators.required, Validators.maxLength(15)]],
@@ -57,6 +68,9 @@ export class HeroCreateComponent {
     public dialog: MatDialog
   ) {}
 
+  ngAfterViewInit(): void {
+    console.log(this.heroSelected);
+  }
   showPreviousHeroe() {
     if (this.currentImageIndex > 0) {
       this.currentImageIndex--;
@@ -69,7 +83,24 @@ export class HeroCreateComponent {
     }
   }
   onSubmit(): void {
-    this.selectAvatar = !this.heroForm.invalid;
+    if (this.editHeroe && !this.heroForm.invalid) {
+      let index: number = 0;
+      if (this.heroSelected.index) {
+        index = this.heroSelected.index;
+      }
+      this.service.heroes[index].heroName = this.heroForm.value.heroName;
+      this.service.heroes[index].realName = this.heroForm.value.realName;
+      this.service.heroes[index].power = this.heroForm.value.power;
+      this.service.heroes[index].weakness = this.heroForm.value.weakness;
+
+      this.dialog.open(ModalComponent, {
+        width: '350px',
+        data: { info: 'Super heroe editado con exito' },
+      });
+      this.router.navigate(['/heroesList']);
+    } else {
+      this.selectAvatar = !this.heroForm.invalid;
+    }
   }
   continueToList(avatarSelected: number, imgOfAvatar: string): void {
     this.heroForm.value.avatar = imgOfAvatar;

@@ -76,10 +76,12 @@ export class HeroListComponent implements OnInit {
     );
   }
 
-  navigateToEditHeroe(heroSelected: HeroesCharacteristics): void {
+  navigateToEditHeroe(heroSelected: HeroesCharacteristics, index:number): void {
     this.service.heroSelected = heroSelected;
+    heroSelected.index = index;
     this.service.navigateToEdit = true;
     this.router.navigate(['/heroesEdit']);
+    console.log(this.service.heroes);
   }
 
   deleteHeroe(heroSelected: HeroesCharacteristics): void {

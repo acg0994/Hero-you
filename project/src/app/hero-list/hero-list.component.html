@@ -27,7 +27,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let hero of filteredHeroes">
+        <tr *ngFor="let hero of filteredHeroes index as i">
           <td>{{ hero.realName }}</td>
           <td>{{ hero.heroName }}</td>
           <td>{{ hero.power }}</td>
@@ -35,7 +35,7 @@
           <td><img class="imgAvatar" [src]="hero.avatar" alt="avatar" /></td>
           <td>
             <div class="flexColumn">
-              <button (click)="navigateToEditHeroe(hero)" mat-raised-button color="primary">Editar héroe</button>
+              <button (click)="navigateToEditHeroe(hero, i)" mat-raised-button color="primary">Editar héroe</button>
               <button (click)="deleteHeroe(hero)" mat-raised-button color="warn">Eliminar héroe</button>
             </div>
           </td>
