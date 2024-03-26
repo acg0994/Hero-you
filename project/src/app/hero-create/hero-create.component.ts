@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalComponent } from '../modal/modal.component';
 import { HeroesCharacteristics } from '../../models/heroesCharacteristics.model';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-hero-create',
@@ -28,11 +29,12 @@ import { HeroesCharacteristics } from '../../models/heroesCharacteristics.model'
     MatFormFieldModule,
     MatSelectModule,
     MatIconModule,
+    HttpClientModule 
   ],
   templateUrl: './hero-create.component.html',
   styleUrl: './hero-create.component.scss',
 })
-export class HeroCreateComponent implements AfterViewInit {
+export class HeroCreateComponent {
   @Input() heroSelected: HeroesCharacteristics = new HeroesCharacteristics();
   @Input() editHeroe: boolean = false;
 
@@ -68,9 +70,6 @@ export class HeroCreateComponent implements AfterViewInit {
     public dialog: MatDialog
   ) {}
 
-  ngAfterViewInit(): void {
-    console.log(this.heroSelected);
-  }
   showPreviousHeroe() {
     if (this.currentImageIndex > 0) {
       this.currentImageIndex--;
@@ -92,12 +91,13 @@ export class HeroCreateComponent implements AfterViewInit {
       this.service.heroes[index].realName = this.heroForm.value.realName;
       this.service.heroes[index].power = this.heroForm.value.power;
       this.service.heroes[index].weakness = this.heroForm.value.weakness;
-
-      this.dialog.open(ModalComponent, {
-        width: '350px',
-        data: { info: 'Super heroe editado con exito' },
-      });
-      this.router.navigate(['/heroesList']);
+      this.service.editHeroe().subscribe(message => {
+        this.dialog.open(ModalComponent, {
+          width: '350px',
+          data: { info: message },
+        });
+        this.router.navigate(['/heroesList']);
+      })
     } else {
       this.selectAvatar = !this.heroForm.invalid;
     }
@@ -106,10 +106,13 @@ export class HeroCreateComponent implements AfterViewInit {
     this.heroForm.value.avatar = imgOfAvatar;
     this.service.heroes.push(this.heroForm.value);
     this.service.imagesOfAvatar.splice(avatarSelected, 1);
-    this.dialog.open(ModalComponent, {
-      width: '350px',
-      data: { info: 'Super heroe creado' },
+    this.service.postDataHeroes().subscribe(response => {
+      this.dialog.open(ModalComponent, {
+        width: '350px',
+        data: { info: response },
+      });
     });
+    
     this.router.navigate(['/heroesList']);
   }
 }

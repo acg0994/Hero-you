@@ -9,11 +9,12 @@ import { ModalComponent } from './modal/modal.component';
 import { MatDialog } from '@angular/material/dialog';
 import { HeroService } from './hero.service';
 import { Location } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, MatButtonModule],
+  imports: [RouterOutlet, CommonModule, MatButtonModule, HttpClientModule ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
@@ -32,7 +33,6 @@ export class AppComponent implements AfterViewInit {
       this.service.main = document.getElementById('main');
     }
     this.location.onUrlChange((url) => {
-      console.log(url);
       if (this.service.main) {
         if (url === '/heroesEdit') {
           this.service.main.style.backgroundImage =

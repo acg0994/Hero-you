@@ -71,17 +71,21 @@ export class HeroListComponent implements OnInit {
   }
 
   filterHeroes(value: string) {
-    this.filteredHeroes = this.service.heroes.filter(
-      (hero) => hero.realName.toLowerCase() === value.toLowerCase()
-    );
+    this.service.getDataHeroes().subscribe((data) => {
+      this.filteredHeroes = data.filter(
+        (hero) => hero.realName.toLowerCase() === value.toLowerCase()
+      );
+    });
   }
 
-  navigateToEditHeroe(heroSelected: HeroesCharacteristics, index:number): void {
+  navigateToEditHeroe(
+    heroSelected: HeroesCharacteristics,
+    index: number
+  ): void {
     this.service.heroSelected = heroSelected;
     heroSelected.index = index;
     this.service.navigateToEdit = true;
     this.router.navigate(['/heroesEdit']);
-    console.log(this.service.heroes);
   }
 
   deleteHeroe(heroSelected: HeroesCharacteristics): void {
@@ -94,16 +98,18 @@ export class HeroListComponent implements OnInit {
           buttons: true,
         },
       });
-      dialog.afterClosed().subscribe(result => {
+      dialog.afterClosed().subscribe((result) => {
         if (result) {
           this.service.heroes.splice(index, 1);
           this.filter.get('search')?.reset('');
           this.service.imagesOfAvatar.push(heroSelected.avatar);
-          this.dialog.open(ModalComponent, {
-            width: '350px',
-            data: {
-              info: 'El super heroe fue eliminado',
-            },
+          this.service.deletedHeroe().subscribe((message) => {
+            this.dialog.open(ModalComponent, {
+              width: '350px',
+              data: {
+                info: message,
+              },
+            });
           });
         }
       });

@@ -1,10 +1,8 @@
 import { Routes } from '@angular/router';
-import { HeroListComponent } from './hero-list/hero-list.component';
-import { HeroCreateComponent } from './hero-create/hero-create.component';
-import { HeroEditComponent } from './hero-edit/hero-edit.component';
-import { AppComponent } from './app.component';
 
-export const routes: Routes = [ 
-{ path: 'heroesList', component: HeroListComponent },
-{ path: 'heroesCreate', component: HeroCreateComponent },
-{ path: 'heroesEdit', component: HeroEditComponent }];
+export const routes: Routes = [
+  { path: '', redirectTo: '', pathMatch: 'full' },
+  { path: 'heroesList', loadComponent:()=> import('../app/hero-list/hero-list.component').then((component) => component.HeroListComponent) },
+  { path: 'heroesCreate', loadComponent:()=> import('../app/hero-create/hero-create.component').then((component) => component.HeroCreateComponent) },
+  { path: 'heroesEdit', loadComponent:()=> import('../app/hero-edit/hero-edit.component').then((component) => component.HeroEditComponent) },
+];
