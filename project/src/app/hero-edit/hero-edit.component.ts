@@ -2,20 +2,22 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { HeroService } from '../hero.service';
 import { HeroCreateComponent } from '../hero-create/hero-create.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-hero-edit',
   standalone: true,
-  imports: [HeroCreateComponent],
+  imports: [
+    HeroCreateComponent,
+    CommonModule
+  ],
   templateUrl: './hero-edit.component.html',
-  styleUrl: './hero-edit.component.scss'
+  styleUrl: './hero-edit.component.scss',
 })
 export class HeroEditComponent implements OnInit {
-
-  
-constructor(public service: HeroService, private router: Router,) {}
+  constructor(public service: HeroService, private router: Router) {}
   ngOnInit(): void {
-    if(this.service.navigateToEdit !== true) {
+    if (this.service.navigateToEdit !== true) {
       this.router.navigate(['']);
     } else {
       this.service.navigateToEdit = false;

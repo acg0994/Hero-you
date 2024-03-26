@@ -32,7 +32,8 @@ import { LoaderAppComponent } from '../loader-app/loader-app.component';
     MatSelectModule,
     MatIconModule,
     HttpClientModule,
-    LoaderAppComponent 
+    LoaderAppComponent,
+    CommonModule
   ],
   templateUrl: './hero-create.component.html',
   styleUrl: './hero-create.component.scss',

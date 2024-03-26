@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HeroEditComponent } from './hero-edit.component';
+import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('HeroEditComponent', () => {
   let component: HeroEditComponent;
@@ -8,7 +9,7 @@ describe('HeroEditComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HeroEditComponent]
+      imports: [HeroEditComponent, BrowserAnimationsModule, NoopAnimationsModule]
     })
     .compileComponents();
     

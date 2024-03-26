@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HeroCreateComponent } from './hero-create.component';
+import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('HeroCreateComponent', () => {
   let component: HeroCreateComponent;
@@ -8,7 +9,7 @@ describe('HeroCreateComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HeroCreateComponent]
+      imports: [HeroCreateComponent, BrowserAnimationsModule, NoopAnimationsModule]
     })
     .compileComponents();
     

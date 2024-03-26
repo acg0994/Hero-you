@@ -27,7 +27,7 @@ import { LoaderAppService } from '../loader-app.service';
     MatButtonModule,
     MatIconModule,
     SlickCarouselModule,
-    LoaderAppComponent,
+    LoaderAppComponent
   ],
   templateUrl: './hero-list.component.html',
   styleUrl: './hero-list.component.scss',
