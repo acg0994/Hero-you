@@ -40,8 +40,16 @@ export class HeroService {
     );
   }
 
-  getDataHeroes(): Observable<HeroesCharacteristics[]> {
-    return of(this.heroes);
+  getDataHeroes(showLoader: boolean): Observable<HeroesCharacteristics[]> {
+    if (showLoader) {
+      this.loaderService.showLoader();
+      return of(this.heroes).pipe(
+        delay(1000),
+        tap(() => this.loaderService.hideLoader())
+      );
+    } else {
+      return of(this.heroes);
+    }
   }
 
   deletedHeroe(): Observable<string> {

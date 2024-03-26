@@ -27,7 +27,7 @@ import { LoaderAppService } from '../loader-app.service';
     MatButtonModule,
     MatIconModule,
     SlickCarouselModule,
-    LoaderAppComponent
+    LoaderAppComponent,
   ],
   templateUrl: './hero-list.component.html',
   styleUrl: './hero-list.component.scss',
@@ -75,9 +75,9 @@ export class HeroListComponent implements OnInit {
   }
 
   filterHeroes(value: string) {
-    this.service.getDataHeroes().subscribe((data) => {
+    this.service.getDataHeroes(false).subscribe((data) => {
       this.filteredHeroes = data.filter(
-        (hero) => hero.realName.toLowerCase() === value.toLowerCase()
+        (hero) => hero.heroName.toLowerCase() === value.toLowerCase()
       );
     });
   }
