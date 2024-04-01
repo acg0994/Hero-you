@@ -7,12 +7,14 @@ import { LoaderAppService } from './loader-app.service';
   providedIn: 'root',
 })
 export class HeroService {
+  public user: string | null = '';
   public main: HTMLElement | null = null;
   public heroes: HeroesCharacteristics[] = [];
   public imagesOfAvatar: string[] = [];
   public heroSelected: HeroesCharacteristics = new HeroesCharacteristics();
   public navigateToEdit: boolean = false;
   public confirmDelete: boolean = false;
+  public loginApp: boolean = true;
 
   constructor(private loaderService: LoaderAppService) {
     this.getImages().subscribe((data) => {
@@ -24,6 +26,30 @@ export class HeroService {
     this.confirmDelete = decision;
   }
 
+  login(): Observable<boolean> {
+    this.loaderService.showLoader();
+    const userRegistry: string | null = localStorage.getItem('isLoggedIn');
+    if (this.user !== userRegistry) {
+      return of(false).pipe(
+        delay(1000),
+        tap(() => this.loaderService.hideLoader())
+      );
+    } else {
+      return of(true).pipe(
+        delay(1000),
+        tap(() => this.loaderService.hideLoader())
+      );
+    }
+  }
+
+  registerUser(): Observable<string> {
+    this.loaderService.showLoader();
+    this.user = localStorage.getItem('isLoggedIn');
+    return of('Usuario creado').pipe(
+      delay(500),
+      tap(() => this.loaderService.hideLoader())
+    );
+  }
   getImages(): Observable<string[]> {
     return of([
       '../../assets/Images/Heroes/5.png',

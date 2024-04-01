@@ -3,12 +3,12 @@ import { AfterViewInit, Component } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { ModalComponent } from './modal/modal.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { HeroService } from './hero.service';
 import { Location } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
 import { LoaderAppService } from './loader-app.service';
 import { LoaderAppComponent } from './loader-app/loader-app.component';
+import { LoginComponent } from './login/login.component';
 
 @Component({
   selector: 'app-root',
@@ -17,15 +17,17 @@ import { LoaderAppComponent } from './loader-app/loader-app.component';
     RouterOutlet,
     CommonModule,
     MatButtonModule,
-    HttpClientModule,
     LoaderAppComponent,
+    LoginComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
 export class AppComponent implements AfterViewInit {
   public home: boolean = true;
+  public loginError: boolean = false;
 
+ 
   constructor(
     private router: Router,
     public dialog: MatDialog,
@@ -98,11 +100,28 @@ export class AppComponent implements AfterViewInit {
     });
   }
 
-  navigateToHome() {
+  navigateToHome(): void {
     if (this.service.heroes.length < 4) {
       this.location.back();
     } else {
       this.router.navigate(['']);
     }
+  }
+
+  logout(): void {
+    const dialog: MatDialogRef<any> = this.dialog.open(ModalComponent, {
+      width: '350px',
+      data: {
+        info: 'Esta seguro de cerrar la sesión?',
+        buttons: true,
+      },
+    });
+    dialog.afterClosed().subscribe((result) => {
+      if (result) {
+        this.router.navigate([''])
+        this.service.loginApp = true;
+      }
+    });
+    
   }
 }

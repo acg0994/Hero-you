@@ -1,0 +1,52 @@
+<div class="login-container">
+  <mat-card class="login-card">
+    <mat-card-content>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <mat-form-field class="login-input">
+          <div class="error" *ngIf="loginError && !isRegister">El usuario no existe</div>
+          <input
+            matInput
+            formControlName="email"
+            placeholder="Correo Electrónico"
+            type="email"
+          />
+          <mat-error
+            *ngIf="
+              loginForm.get('email')?.invalid && loginForm.get('email')?.touched
+            "
+          >
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="login-input">
+          <input
+            matInput
+            formControlName="password"
+            placeholder="Contraseña"
+            type="password"
+          />
+        </mat-form-field>
+        <button
+          *ngIf="!isRegister"
+          mat-raised-button
+          color="primary"
+          class="login-button"
+          [disabled]="loginForm.invalid"
+        >
+          Iniciar Sesión
+        </button>
+        <button
+          *ngIf="isRegister"
+          mat-raised-button
+          color="primary"
+          class="login-button"
+          [disabled]="loginForm.invalid"
+        >
+          Registrar
+        </button>
+      </form>
+    </mat-card-content>
+    <mat-card-actions *ngIf="!isRegister" class="login-actions">
+      <a (click)="register()" class="login-link">Crear Usuario</a>
+    </mat-card-actions>
+  </mat-card>
+</div>
