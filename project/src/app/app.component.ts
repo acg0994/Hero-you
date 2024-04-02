@@ -9,19 +9,22 @@ import { Location } from '@angular/common';
 import { LoaderAppService } from './loader-app.service';
 import { LoaderAppComponent } from './loader-app/loader-app.component';
 import { LoginComponent } from './login/login.component';
+import { KeysPipe } from "./pipes/keys.pipe";
+import { keys } from './keys/keys';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [
-    RouterOutlet,
-    CommonModule,
-    MatButtonModule,
-    LoaderAppComponent,
-    LoginComponent
-  ],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
+    selector: 'app-root',
+    standalone: true,
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.scss',
+    imports: [
+        RouterOutlet,
+        CommonModule,
+        MatButtonModule,
+        LoaderAppComponent,
+        LoginComponent,
+        KeysPipe
+    ]
 })
 export class AppComponent implements AfterViewInit {
   public home: boolean = true;
@@ -36,21 +39,22 @@ export class AppComponent implements AfterViewInit {
     public loader: LoaderAppService
   ) {}
 
+  // Metodo que controla los fondos de pantalla según la ruta
   ngAfterViewInit(): void {
     if (typeof window !== 'undefined' && typeof document !== 'undefined') {
       this.service.main = document.getElementById('main');
     }
     this.location.onUrlChange((url) => {
       if (this.service.main) {
-        if (url === '/heroesEdit') {
+        if (url === keys['heroesEditRoute']) {
           this.service.main.style.backgroundImage =
             'url("../assets/Images/Editar/Edita-desktop.png")';
           this.home = false;
-        } else if (url === '/heroesList') {
+        } else if (url === keys['heroesListRoute']) {
           this.service.main.style.backgroundImage =
             'url("../assets/Images/Listar/List-desktop.png")';
           this.home = false;
-        } else if (url === '/heroesCreate') {
+        } else if (url === keys['heroesCreateRoute']) {
           if (this.service.heroes.length === 4) {
             this.router.navigate(['']);
             this.home = true;
@@ -68,28 +72,29 @@ export class AppComponent implements AfterViewInit {
     });
   }
 
+  // Lógica de navegaciones desde la página principal
   navigateToNext(option: string): void {
-    const showLoader: boolean = option === '/heroesList';
+    const showLoader: boolean = option === keys['heroesListRoute'];
     this.service.getDataHeroes(showLoader).subscribe((data) => {
       if (data.length === 0) {
-        if (option === '/heroesEdit') {
+        if (option === keys['heroesEditRoute']) {
           this.dialog.open(ModalComponent, {
-            width: '350px',
-            data: { info: 'No hay heroes para editar' },
+            width: keys['modalWidth'],
+            data: { info: keys['noHeroesToEdit'] },
           });
-        } else if (option === '/heroesList') {
+        } else if (option === keys['heroesListRoute']) {
           this.dialog.open(ModalComponent, {
-            width: '350px',
-            data: { info: 'No hay heroes en la Guarida secreta' },
+            width: keys['modalWidth'],
+            data: { info: keys['noHeroesToEdit'] },
           });
         } else {
           this.router.navigate([option]);
         }
       } else if (data.length === 4) {
-        if (option === '/heroesCreate') {
+        if (option === keys['heroesCreateRoute']) {
           this.dialog.open(ModalComponent, {
-            width: '350px',
-            data: { info: 'Has creado el maximo de heroes permitidos' },
+            width: keys['modalWidth'],
+            data: { info: keys['maxHeroes'] },
           });
         } else {
           this.router.navigate([option]);
@@ -100,6 +105,7 @@ export class AppComponent implements AfterViewInit {
     });
   }
 
+  // Lógica para navegar hacia a atras, o la página principal
   navigateToHome(): void {
     if (this.service.heroes.length < 4) {
       this.location.back();
@@ -108,11 +114,12 @@ export class AppComponent implements AfterViewInit {
     }
   }
 
+  // Modal de cerrar sesión
   logout(): void {
     const dialog: MatDialogRef<any> = this.dialog.open(ModalComponent, {
-      width: '350px',
+      width: keys['modalWidth'],
       data: {
-        info: 'Esta seguro de cerrar la sesión?',
+        info: keys['closeSesion'],
         buttons: true,
       },
     });

@@ -19,29 +19,34 @@ import { HeroesCharacteristics } from '../../models/heroesCharacteristics.model'
 import { HttpClientModule } from '@angular/common/http';
 import { LoaderAppService } from '../loader-app.service';
 import { LoaderAppComponent } from '../loader-app/loader-app.component';
+import { KeysPipe } from "../pipes/keys.pipe";
+import { keys } from '../keys/keys';
 
 @Component({
-  selector: 'app-hero-create',
-  standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    MatInputModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatIconModule,
-    HttpClientModule,
-    LoaderAppComponent,
-    CommonModule
-  ],
-  templateUrl: './hero-create.component.html',
-  styleUrl: './hero-create.component.scss',
+    selector: 'app-hero-create',
+    standalone: true,
+    templateUrl: './hero-create.component.html',
+    styleUrl: './hero-create.component.scss',
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        MatInputModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatIconModule,
+        HttpClientModule,
+        LoaderAppComponent,
+        CommonModule,
+        KeysPipe
+    ]
 })
 export class HeroCreateComponent {
+  // Bindings que controlan tanto el heroe seleccionado para editar
   @Input() heroSelected: HeroesCharacteristics = new HeroesCharacteristics();
   @Input() editHeroe: boolean = false;
 
+  // Formulario de creacion / edicion
   public heroForm: FormGroup = this.fb.group({
     realName: [
       '',
@@ -57,11 +62,12 @@ export class HeroCreateComponent {
     avatar: [''],
   });
 
+  // Poderes que se muestran en el accordeon
   public powers: string[] = [
-    'Super fuerza',
-    'Ultrainstinto',
-    'Invisibilidad',
-    'Super velocidad',
+    keys['superStrength'],
+    keys['ultraInstinct'],
+    keys['invisibility'],
+    keys['superSpeed'],
   ];
 
   public currentImageIndex = 0;
@@ -75,17 +81,21 @@ export class HeroCreateComponent {
     public loader: LoaderAppService
   ) {}
 
+  // Flecha hacia atrás de selección de avatar
   showPreviousHeroe() {
     if (this.currentImageIndex > 0) {
       this.currentImageIndex--;
     }
   }
 
+  // Flecha hacia adelante de selección de avatar
   showNextHeroe() {
     if (this.currentImageIndex < this.service.imagesOfAvatar.length - 1) {
       this.currentImageIndex++;
     }
   }
+
+  // Método que controla la funcion de crear o editar a un héroe
   onSubmit(): void {
     if (this.editHeroe && !this.heroForm.invalid) {
       let index: number = 0;
@@ -98,26 +108,28 @@ export class HeroCreateComponent {
       this.service.heroes[index].weakness = this.heroForm.value.weakness;
       this.service.editHeroe().subscribe(message => {
         this.dialog.open(ModalComponent, {
-          width: '350px',
+          width: keys['modalWidth'],
           data: { info: message },
         });
-        this.router.navigate(['/heroesList']);
+        this.router.navigate([keys['heroesListRoute']]);
       })
     } else {
       this.selectAvatar = !this.heroForm.invalid;
     }
   }
+
+  // Metodo que llama al servicio para guardar el nuevo heroe creado y navega hacia el listado
   continueToList(avatarSelected: number, imgOfAvatar: string): void {
     this.heroForm.value.avatar = imgOfAvatar;
     this.service.heroes.push(this.heroForm.value);
     this.service.imagesOfAvatar.splice(avatarSelected, 1);
     this.service.postDataHeroes().subscribe(response => {
       this.dialog.open(ModalComponent, {
-        width: '350px',
+        width: keys['modalWidth'],
         data: { info: response },
       });
     });
     
-    this.router.navigate(['/heroesList']);
+    this.router.navigate([keys['heroesListRoute']]);
   }
 }

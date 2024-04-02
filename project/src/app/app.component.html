@@ -1,3 +1,4 @@
+<!-- Contenedor principal -->
 <main id="main">
   <router-outlet></router-outlet>
   <app-login *ngIf="home && service.loginApp"></app-login>
@@ -8,7 +9,7 @@
       color="primary"
       (click)="navigateToNext('/heroesCreate')"
     >
-      Super diseña
+      {{ 'superDesign' | keys}}
     </button>
     <button
       class="principal-button"
@@ -16,9 +17,10 @@
       color="primary"
       (click)="navigateToNext('/heroesList')"
     >
-      Guarida secreta
+    {{ 'secretLair' | keys}}
     </button>
   </div>
+  <!-- Flecha atras -->
   <div class="footer" *ngIf="!home">
     <img
       (click)="navigateToHome()"
@@ -26,6 +28,8 @@
       src="../assets/Images/backward.png"
     />
   </div>
+  <!-- LogOut -->
   <img (click)="logout()" *ngIf="!service.loginApp" class="logout" src="../assets/Images/Inicio/Logout.png">
 </main>
+<!-- LoaderApp -->
 <loader-app *ngIf="loader.isLoading"></loader-app>

@@ -16,6 +16,8 @@ import { CommonModule } from '@angular/common';
 })
 export class HeroEditComponent implements OnInit {
   constructor(public service: HeroService, private router: Router) {}
+
+  // Este ciclo de vida, controla que no se pueda navegar al componente de edicion, si no es desde el listado con un héroe seleccionado
   ngOnInit(): void {
     if (this.service.navigateToEdit !== true) {
       this.router.navigate(['']);

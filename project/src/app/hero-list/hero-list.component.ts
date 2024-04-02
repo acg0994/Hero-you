@@ -13,24 +13,27 @@ import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { ModalComponent } from '../modal/modal.component';
 import { LoaderAppComponent } from '../loader-app/loader-app.component';
 import { LoaderAppService } from '../loader-app.service';
+import { KeysPipe } from "../pipes/keys.pipe";
+import { keys } from '../keys/keys';
 
 @Component({
-  selector: 'app-hero-list',
-  standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    CommonModule,
-    MatFormField,
-    MatIcon,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatIconModule,
-    SlickCarouselModule,
-    LoaderAppComponent
-  ],
-  templateUrl: './hero-list.component.html',
-  styleUrl: './hero-list.component.scss',
+    selector: 'app-hero-list',
+    standalone: true,
+    templateUrl: './hero-list.component.html',
+    styleUrl: './hero-list.component.scss',
+    imports: [
+        ReactiveFormsModule,
+        CommonModule,
+        MatFormField,
+        MatIcon,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatIconModule,
+        SlickCarouselModule,
+        LoaderAppComponent,
+        KeysPipe
+    ]
 })
 export class HeroListComponent implements OnInit {
   filter: FormGroup = this.filterForm.group({
@@ -53,6 +56,8 @@ export class HeroListComponent implements OnInit {
     public loader: LoaderAppService
   ) {}
 
+  // Método que controla, que si no hay héroes, se navegue a la pagina principal
+  // y por la contra, iniciar el input para el filtrado
   ngOnInit(): void {
     if (this.service.heroes.length <= 0) {
       this.router.navigate(['']);
@@ -64,6 +69,7 @@ export class HeroListComponent implements OnInit {
     });
   }
 
+  // Este método aplica el filtro y muestra los héroes en una tabla o el mensaje de no hay resultados
   applyFilter() {
     if (this.filteredHeroes.length > 0 && this.filter.value.search !== '') {
       this.resultsOfSearch = true;
@@ -74,6 +80,7 @@ export class HeroListComponent implements OnInit {
     }
   }
 
+  // Este método aplica el filtro y muestra los héroes en una tabla o el mensaje de no hay resultados
   filterHeroes(value: string) {
     this.service.getDataHeroes(false).subscribe((data) => {
       this.filteredHeroes = data.filter(
@@ -82,6 +89,7 @@ export class HeroListComponent implements OnInit {
     });
   }
 
+  // Método que controla la lógica de la navegación al componente de edicion del héroe seleccionado
   navigateToEditHeroe(
     heroSelected: HeroesCharacteristics,
     index: number
@@ -89,16 +97,17 @@ export class HeroListComponent implements OnInit {
     this.service.heroSelected = heroSelected;
     heroSelected.index = index;
     this.service.navigateToEdit = true;
-    this.router.navigate(['/heroesEdit']);
+    this.router.navigate([keys['heroesEditRoute']]);
   }
 
+  // Método que elimina al heroe seleccionado
   deleteHeroe(heroSelected: HeroesCharacteristics): void {
     const index = this.service.heroes.indexOf(heroSelected);
     if (index !== -1) {
       const dialog: MatDialogRef<any> = this.dialog.open(ModalComponent, {
-        width: '350px',
+        width: keys['modalWidth'],
         data: {
-          info: 'Esta seguro de eliminar al super héroe?',
+          info: keys['cuestionDeleteHeroe'],
           buttons: true,
         },
       });
@@ -109,7 +118,7 @@ export class HeroListComponent implements OnInit {
           this.service.imagesOfAvatar.push(heroSelected.avatar);
           this.service.deletedHeroe().subscribe((message) => {
             this.dialog.open(ModalComponent, {
-              width: '350px',
+              width: keys['modalWidth'],
               data: {
                 info: message,
               },

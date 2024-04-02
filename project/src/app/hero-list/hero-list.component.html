@@ -1,4 +1,5 @@
 <div class="content-center">
+  <!-- Formulario para filtar los heroes -->
   <form [formGroup]="filter">
     <mat-form-field appearance="fill">
       <input matInput formControlName="search" placeholder="Buscar" />
@@ -9,21 +10,21 @@
         aria-label="Search"
         (click)="applyFilter()"
       >
-        <mat-icon>search</mat-icon>
+        <mat-icon>{{ 'search' | keys}}</mat-icon>
       </button>
     </mat-form-field>
   </form>
-
+  <!-- Resultado de la busqueda -->
   <div *ngIf="resultsOfSearch">
     <table class="hero-table">
       <thead>
         <tr>
-          <th>Nombre Real</th>
-          <th>Nombre de Héroe</th>
-          <th>Poder</th>
-          <th>Debilidad</th>
-          <th>Avatar</th>
-          <th>Acciones</th>
+          <th>{{ 'name' | keys}}</th>
+          <th>{{ 'heroName' | keys}}</th>
+          <th>{{ 'power' | keys}}</th>
+          <th>{{ 'weakness' | keys}}</th>
+          <th>{{ 'avatar' | keys}}</th>
+          <th>{{ 'actions' | keys}}</th>
         </tr>
       </thead>
       <tbody>
@@ -35,16 +36,17 @@
           <td><img class="imgAvatar" [src]="hero.avatar" alt="avatar" /></td>
           <td>
             <div class="flexColumn">
-              <button (click)="navigateToEditHeroe(hero, i)" mat-raised-button color="primary">Editar héroe</button>
-              <button (click)="deleteHeroe(hero)" mat-raised-button color="warn">Eliminar héroe</button>
+              <button (click)="navigateToEditHeroe(hero, i)" mat-raised-button color="primary">{{ 'heroEdit' | keys}}</button>
+              <button (click)="deleteHeroe(hero)" mat-raised-button color="warn">{{ 'heroDelete' | keys}}</button>
             </div>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
+  <!-- Mensaje cuando no se encuentran héroes -->
   <div *ngIf="!resultsOfSearch && showNoResults">
-    <h1>No hay resultados</h1>
+    <h1>{{ 'noResults' | keys}}</h1>
   </div>
 </div>
 <loader-app *ngIf="loader.isLoading"></loader-app>

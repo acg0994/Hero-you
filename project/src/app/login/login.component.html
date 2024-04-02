@@ -1,9 +1,12 @@
+<!-- Contenedor principal del lógin -->
 <div class="login-container">
+  <!-- Card de logado y registro -->
   <mat-card class="login-card">
     <mat-card-content>
+      <!-- Formulario con los inputs de logado y registro -->
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <mat-form-field class="login-input">
-          <div class="error" *ngIf="loginError && !isRegister">El usuario no existe</div>
+          <div class="error" *ngIf="loginError && !isRegister">{{ 'userNoExists' | keys}}</div>
           <input
             matInput
             formControlName="email"
@@ -32,7 +35,7 @@
           class="login-button"
           [disabled]="loginForm.invalid"
         >
-          Iniciar Sesión
+        {{ 'login' | keys}}
         </button>
         <button
           *ngIf="isRegister"
@@ -41,12 +44,13 @@
           class="login-button"
           [disabled]="loginForm.invalid"
         >
-          Registrar
+        {{ 'register' | keys}}
         </button>
       </form>
     </mat-card-content>
+    <!-- Enlace a registrar usuario -->
     <mat-card-actions *ngIf="!isRegister" class="login-actions">
-      <a (click)="register()" class="login-link">Crear Usuario</a>
+      <a (click)="register()" class="login-link">{{ 'createUser' | keys}}</a>
     </mat-card-actions>
   </mat-card>
 </div>

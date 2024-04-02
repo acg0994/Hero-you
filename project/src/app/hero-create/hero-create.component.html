@@ -1,29 +1,30 @@
+<!-- Formulario de creación de heroe -->
 <div *ngIf="!selectAvatar" class="form-container HeroCreate">
   <form [formGroup]="heroForm" (ngSubmit)="onSubmit()" class="hero-form">
     <div
       class="error"
       *ngIf="heroForm.get('realName')?.errors?.['pattern'] && heroForm.get('realName')?.touched"
     >
-      El nombre debe comenzar con una letra mayúscula.
+    {{ 'userUpperCase' | keys}}
     </div>
     <div class="error" *ngIf="heroForm.get('realName')?.errors?.['maxlength']">
-      Máximo 15 caracteres
+      {{ 'maxCharacters' | keys}}
     </div>
     <mat-form-field appearance="fill">
-      <mat-label *ngIf="!editHeroe">Nombre Real</mat-label>
+      <mat-label *ngIf="!editHeroe">{{ 'name' | keys}}</mat-label>
       <mat-label *ngIf="editHeroe">{{heroSelected.realName}}</mat-label>
       <input matInput formControlName="realName" />
     </mat-form-field>
     <div class="error" *ngIf="heroForm.get('heroName')?.errors?.['maxlength']">
-      Máximo 15 caracteres
+      {{ 'maxCharacters' | keys}}
     </div>
     <mat-form-field appearance="fill">
-      <mat-label *ngIf="!editHeroe">Apodo de Superhéroe</mat-label>
+      <mat-label *ngIf="!editHeroe">{{ 'heroName' | keys}}</mat-label>
       <mat-label *ngIf="editHeroe">{{heroSelected.heroName}}</mat-label>
       <input matInput formControlName="heroName" />
     </mat-form-field>
     <mat-form-field appearance="fill">
-      <mat-label *ngIf="!editHeroe">Poder</mat-label>
+      <mat-label *ngIf="!editHeroe">{{ 'power' | keys}}</mat-label>
       <mat-label *ngIf="editHeroe">{{heroSelected.power}}</mat-label>
       <mat-select formControlName="power">
         <mat-option *ngFor="let power of powers" [value]="power">{{
@@ -32,18 +33,18 @@
       </mat-select>
     </mat-form-field>
     <div class="error" *ngIf="heroForm.get('weakness')?.errors?.['maxlength']">
-      Máximo 15 caracteres
+      {{ 'maxCharacters' | keys}}
     </div>
     <mat-form-field appearance="fill">
-      <mat-label *ngIf="!editHeroe">Debilidad</mat-label>
+      <mat-label *ngIf="!editHeroe">{{ 'weakness' | keys}}</mat-label>
       <mat-label *ngIf="editHeroe">{{heroSelected.weakness}}</mat-label>
       <input matInput formControlName="weakness" />
     </mat-form-field>
-    <button *ngIf="!editHeroe" mat-raised-button color="primary" type="submit">Continuar</button>
-    <button *ngIf="editHeroe" mat-raised-button color="primary" type="submit">Editar</button>
+    <button *ngIf="!editHeroe" mat-raised-button color="primary" type="submit">{{ 'continue' | keys}}</button>
+    <button *ngIf="editHeroe" mat-raised-button color="primary" type="submit">{{ 'edit' | keys}}</button>
   </form>
 </div>
-
+<!-- Carrusel de avatares -->
 <div *ngIf="selectAvatar && !editHeroe" class="avatar-carousel HeroCreate">
   <div class="image-container">
     <img [src]="service.imagesOfAvatar[currentImageIndex]" alt="Avatar" />
@@ -53,7 +54,7 @@
     mat-raised-button
     color="primary"
   >
-    Selecciona avatar
+  {{ 'selectAvatar' | keys}}
   </button>
   <div>
     <button
@@ -61,14 +62,14 @@
       (click)="showPreviousHeroe()"
       [disabled]="currentImageIndex === 0"
     >
-      <mat-icon class="white">chevron_left</mat-icon>
+      <mat-icon class="white">{{ 'carouselLeft' | keys}}</mat-icon>
     </button>
     <button
       mat-icon-button
       (click)="showNextHeroe()"
       [disabled]="currentImageIndex === service.imagesOfAvatar.length - 1"
     >
-      <mat-icon class="white">chevron_right</mat-icon>
+      <mat-icon class="white">{{ 'carouselRight' | keys}}</mat-icon>
     </button>
   </div>
 </div>

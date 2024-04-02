@@ -1,9 +1,11 @@
+// Imagen de fondo, componente principal
 main {
     background-image: url("../assets/Images/Inicio/Inicio-desktop.png");
     background-position: center;
     background-size: cover;
     height: 100vh;
 }
+// Estilo y estructura de los botones de la página principal
 .principal {
     margin-left: 10%;
     margin-right: 10%;
@@ -26,6 +28,7 @@ main {
     }
 }
 
+// Diseño y posición de la flecha hacia atrás
 .footer {
     position: absolute;
     bottom: 700px;
@@ -39,6 +42,8 @@ main {
         }
     }
 }
+
+// Diseño y posición del boton de logout
 .logout {
     position: absolute;
     bottom: 50px;

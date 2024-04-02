@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component} from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -12,19 +12,22 @@ import { MatInputModule } from '@angular/material/input';
 import { HeroService } from '../hero.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalComponent } from '../modal/modal.component';
+import { KeysPipe } from "../pipes/keys.pipe";
+import { keys } from '../keys/keys';
 
 @Component({
-  selector: 'app-login',
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatButtonModule,
-    MatCardModule,
-    MatInputModule,
-    ReactiveFormsModule,
-  ],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss',
+    selector: 'app-login',
+    standalone: true,
+    templateUrl: './login.component.html',
+    styleUrl: './login.component.scss',
+    imports: [
+        CommonModule,
+        MatButtonModule,
+        MatCardModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        KeysPipe
+    ]
 })
 export class LoginComponent {
   public loginError: boolean = false;
@@ -36,6 +39,7 @@ export class LoginComponent {
 
   constructor(private formBuilder: FormBuilder, public service: HeroService, public dialog: MatDialog,) {}
 
+  // Método que loga o crea al usuario en funcion de la variable de registro del servicio
   onSubmit(): void {
     if (!this.isRegister) {
       this.service.user = this.loginForm.value.email
@@ -51,7 +55,7 @@ export class LoginComponent {
     } else {
       this.service.registerUser().subscribe((data) => {
         this.dialog.open(ModalComponent, {
-          width: '350px',
+          width: keys['modalWidth'],
           data: { info: data },
         });
         localStorage.setItem('isLoggedIn', this.loginForm.value.email);
@@ -59,6 +63,8 @@ export class LoginComponent {
       });
     }
   }
+
+  // Método que te lleva al formulario de registro
   register(): void {
     this.isRegister = true;
   }

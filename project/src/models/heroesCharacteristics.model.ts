@@ -1,3 +1,4 @@
+//Modelo de datos de los heroes
 export class HeroesCharacteristics {
     heroName: string = "";
     power: string = "";

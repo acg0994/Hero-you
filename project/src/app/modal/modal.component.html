@@ -1,19 +1,21 @@
 <div mat-dialog-content>
+  <!-- Mensaje que mostramos en el modal -->
   <h1>{{ data.info }}</h1>
+  <!-- Botones de acción -->
   <div class="around" *ngIf="data.buttons">
     <button
       (click)="cerrar(true)"
       mat-raised-button
       color="primary"
     >
-      Si
+    {{ 'yes' | keys}}
     </button>
     <button
       (click)="cerrar(false)"
       mat-raised-button
       color="warn"
     >
-      No
+    {{ 'no' | keys}}
     </button>
   </div>
 </div>

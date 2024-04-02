@@ -1,9 +1,11 @@
+// Diseño del contenedor del formulario
 .form-container {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+// Diseño del formulario
 .hero-form {
     display: flex;
     flex-direction: column;
@@ -14,6 +16,7 @@
     }
 }
 
+// Diseño y posición del avatar
 .avatar-carousel {
     display: flex;
     align-items: center;
@@ -28,6 +31,7 @@
 .white {
     color: white;
 }
+// Color de los errores en el formulario
 .error {
     color: red;
 }
