@@ -35,7 +35,7 @@ export class AppComponent implements AfterViewInit {
     private router: Router,
     public dialog: MatDialog,
     public service: HeroService,
-    private location: Location,
+    public location: Location,
     public loader: LoaderAppService
   ) {}
 
@@ -44,7 +44,7 @@ export class AppComponent implements AfterViewInit {
     if (typeof window !== 'undefined' && typeof document !== 'undefined') {
       this.service.main = document.getElementById('main');
     }
-    this.location.onUrlChange((url) => {
+    this.location?.onUrlChange((url) => {
       if (this.service.main) {
         if (url === keys['heroesEditRoute']) {
           this.service.main.style.backgroundImage =
@@ -119,7 +119,7 @@ export class AppComponent implements AfterViewInit {
     const dialog: MatDialogRef<any> = this.dialog.open(ModalComponent, {
       width: keys['modalWidth'],
       data: {
-        info: keys['closeSesion'],
+        info: keys['closeSession'],
         buttons: true,
       },
     });

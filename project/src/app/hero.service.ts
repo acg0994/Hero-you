@@ -17,7 +17,7 @@ export class HeroService {
   public confirmDelete: boolean = false;
   public loginApp: boolean = true;
 
-  constructor(private loaderService: LoaderAppService) {
+  constructor(public loaderService: LoaderAppService) {
     // Obtenemos las imagenes, del siguiente metodo
     this.getImages().subscribe((data) => {
       this.imagesOfAvatar = data;

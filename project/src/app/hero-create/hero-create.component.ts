@@ -102,10 +102,13 @@ export class HeroCreateComponent {
       if (this.heroSelected.index) {
         index = this.heroSelected.index;
       }
-      this.service.heroes[index].heroName = this.heroForm.value.heroName;
-      this.service.heroes[index].realName = this.heroForm.value.realName;
-      this.service.heroes[index].power = this.heroForm.value.power;
-      this.service.heroes[index].weakness = this.heroForm.value.weakness;
+      if (index >= 0 && index < this.service.heroes.length) {
+        this.service.heroes[index].heroName = this.heroForm.value.heroName;
+        this.service.heroes[index].realName = this.heroForm.value.realName;
+        this.service.heroes[index].power = this.heroForm.value.power;
+        this.service.heroes[index].weakness = this.heroForm.value.weakness;
+      }
+     
       this.service.editHeroe().subscribe(message => {
         this.dialog.open(ModalComponent, {
           width: keys['modalWidth'],

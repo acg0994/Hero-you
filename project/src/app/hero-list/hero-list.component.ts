@@ -107,7 +107,7 @@ export class HeroListComponent implements OnInit {
       const dialog: MatDialogRef<any> = this.dialog.open(ModalComponent, {
         width: keys['modalWidth'],
         data: {
-          info: keys['cuestionDeleteHeroe'],
+          info: keys['questionDeleteHero'],
           buttons: true,
         },
       });
